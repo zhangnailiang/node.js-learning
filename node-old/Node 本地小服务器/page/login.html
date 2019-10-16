@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="index.css"> -->
+    <!-- 文件加载完成后使用 ajax请求 页面跳转 重新 -->
+    <script src="login.js"></script>
+    <script>
+        function login() {
+            var stuNum = document.getElementById("stuNum").value;
+            var password = document.getElementById("password").value;
+            var params = "stuNum=" + stuNum + "&password=" + password;
+            xhr = new XMLHttpRequest();
+            // xhr.open("GET", "/login?" + params, true);
+            // xhr.send(null);
+            xhr.open("POST", "/login", true);
+            xhr.send(params);
+            // xhr.open(method, url, flag);
+            // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            // xhr.send(data);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (xhr.responseText == "OK") {
+                        // 页面跳转的方式 （主流的方式）
+                        // location.href = "/main.html"
+                    } else {
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    hello, world
+    <img src="./node.jpg" alt="">
+    <br>
+    <!-- GET 请求 -->
+    <!-- <input type="text" id="stuNum" placeholder="学号">
+    <input type="password" id="password" placeholder="密码">
+    <input type="submit" value="提交" onclick="login()" name="" id="提交"> -->
+    <!-- POST请求 -->
+    <form method="post" action="/login">
+        <input type="text" name="stuNum" id="stuNum" placeholder="学号">
+        <input type="password" name="password" id="password" placeholder="密码">
+        <input type="submit" value="提交" onclick="login()" name="" id="提交">
+    </form>
+</body>
+
+</html>
