@@ -29,7 +29,23 @@ function insertStudent(id, stuNum, name, age, stuClass, math, pwd, success) {
     });
     connection.end();
 }
+function queryStudentByStuNum(stuNum, success) {
+    var querySql = "select * from student where stu_num = ?;";
+    var params = [stuNum];
+    var connection = doutil.createConnection();
+    connection.connect();
+    connection.query(querySql, params, function (error, result) {
+        if (error == null) {
+            console.log(result);
+            success(result);
+        } else {
+            throw new Error(error)
+        }
+    });
+    connection.end();
+}
 module.exports = {
     "queryAllStudent": queryAllStudent,
-    "insertStudent": insertStudent
+    "insertStudent": insertStudent,
+    "queryStudentByStuNum": queryStudentByStuNum
 }

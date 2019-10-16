@@ -10,7 +10,6 @@ function getAllStudent(request, response) {
 }
 function insertStudent(request, response) {
     var params = url.parse(request.url, true).query;
-    console.log("**params1**", params);
     // studentDao.insertStudent([...params])
     studentDao.insertStudent(params.id, params.stuNum, params.name, params.age, params.stuClass, params.math, params.pwd, function () {
         response.writeHead(200, { "Content-Type": "text/html;charset=utf-8" })
@@ -20,7 +19,20 @@ function insertStudent(request, response) {
 
 
 }
-path.set("/queryAllStudent", getAllStudent);
-path.set("/insertStudent", insertStudent);
+function login(request, response) {
+    var params = url.parse(request.url, true).query;
+    studentDao.queryStudentByStuNum(params.stuNum, function (result) {
+        if (result && result.length > 0 && result[0].pwd == params.pwd) {
+            //写cookie
 
+            response.cookie("id", result[0].id);
+            response.redirect("/api/getAllStudent")
+        } else {
+            response.redirect("/error.html");
+        }
+    })
+}
+path.set("/api/queryAllStudent", getAllStudent);
+path.set("/api/insertStudent", insertStudent);
+path.set("/login", login);
 module.exports.path = path;
