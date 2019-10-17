@@ -22,6 +22,9 @@
                 if (xhr.readyState = 4 && xhr.status == 200) {
                     var result = xhr.responseText;
                     console.log(result);
+                    var pic = document.getElementById("pic");
+                    pic.src = "/getPic?path=" + JSON.parse(result).path;
+
                 }
             }
             xhr.send(form);

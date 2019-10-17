@@ -1,5 +1,6 @@
 var studentDao = require("../dao/studentDao");
 var url = require("url");
+var fs = require("fs")
 var path = new Map();
 function getAllStudent(request, response) {
     studentDao.queryAllStudent(function (result) {
@@ -32,7 +33,23 @@ function login(request, response) {
         }
     })
 }
+function getPic(request, response) {
+    var params = url.parse(request.url, true).query;
+    try {
+        var data = fs.readFileSync("./" + params.path);
+        response.writeHead(200);
+        response.write(data);
+        response.end();
+    } catch (e) {
+        response.writeHead(404);
+        response.end();
+    }
+
+}
 path.set("/api/queryAllStudent", getAllStudent);
 path.set("/api/insertStudent", insertStudent);
 path.set("/login", login);
+path.set("/getPic", getPic);
+
+
 module.exports.path = path;
