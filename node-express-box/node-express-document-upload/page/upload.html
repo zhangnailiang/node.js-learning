@@ -25,6 +25,11 @@
                     var pic = document.getElementById("pic");
                     pic.src = "/getPic?path=" + JSON.parse(result).path;
 
+                    // 文件下载的方式：
+                    // 1. 使用a标签的download属性
+                    var dw = document.getElementById("download");
+                    dw.href = "/getPic?path=" + JSON.parse(result).path;
+
                 }
             }
             xhr.send(form);
@@ -37,6 +42,7 @@
     <input type="file" id="file">
     <button onclick="submitFile()" value="提交"></button>
     <img src="#" id="pic">
+    <a href="#" id="download" download="pic.png">点击此处下载</a>
 </body>
 
 </html>
